@@ -1,0 +1,74 @@
+---
+title: "Second RMD"
+author: "Ben"
+date: "2023-09-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Practice with Latex
+Let's show some math. Use dollar signs in your code to get $f_4(x; a_0,a_1,a_2) = a_0 + a_1x + a_2\ln(0.005x+1)$.
+Use double dollar signs in your code to center the math on it's own line, as in $$f_4(x; a_0,a_1,a_2) = a_0 + a_1x + a_2\ln(0.005x+1).$$
+
+
+## Let's make a coding chunk.
+We'll first define a function. 
+
+```{r }
+h <- function(x){ sqrt( 3-x ) }
+```
+
+Now let's evaluate the function at a couple spots. 
+
+```{r}
+h(-4)
+h(5)
+```
+
+Note that we can't compute the square root of negative 2, which is why we got NaNs above. 
+
+You can perform computations inline, such as $h(-4) = `r h(-4)`$.
+
+### An example with division
+
+The function $f(x) = \frac{2x+4}{x^2}$ involves a division symbol.  Notice that the LaTeX code is not the same as R code.  Also, as a side note, we use $\LaTeX$ (if you want things to print fancy like).
+
+```{r error = TRUE}
+f <- function(x){ (2*x+4)(x^2) }
+```
+
+And now we can compute values for this function. Note that division by zero is not possible, so there will be an error below. 
+
+```{r error = TRUE}
+f(-4)
+f(1)
+f(0)
+```
+
+### Piecewise examples
+
+Let's perform computations with a piecewise function, such as 
+$$g(x) = 
+\begin{cases}
+x^2 - 6 & \quad x < 0 \\ 
+10 - x & \quad x \geq 0.
+\end{cases}$$
+
+```{r}
+g <- function(x){
+  ifelse(x<0, x^2-6, 10-x)
+}
+```
+
+We can evaluate the function at various points.
+
+```{r}
+g(7)
+g(-7)
+g(-33)
+g(0)
+```
+
