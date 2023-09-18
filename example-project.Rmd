@@ -1,0 +1,35 @@
+---
+title: "Example Project"
+author: "Ben"
+date: "2023-09-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+I'll add stuff here soon.
+
+## Task 1
+
+This code creates a data frame called “dist”. The dist data frame contains measurements for 202 light bulbs 2104 hours after the light bulb was turned on.
+
+```{r}
+library(data4led)
+dist <- led_time(2100)
+dist
+```
+
+Let's create a histogram to see what the intensities look like after 2104 hours.
+
+```{r}
+hist(dist$percent_intensity)
+```
+
+Almost every bulb (maybe 3 don't) have an intensity above 100 percent. 
+
+
+
