@@ -1,0 +1,72 @@
+---
+title: "Example Project Task 3"
+author: "Ben"
+date: "2023-09-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Let's graph a histogram of the intensities of the lightbulbs that are after about 2000 hours. 
+
+```{r}
+library(data4led)
+dist <- led_time(2100)
+hist(
+  dist$percent_intensity,probability = TRUE)
+```
+
+Let's fit the model $f_0$ to the histogram. We'll use $a = 99.5$ and $b=103.5$ to do so, as these are the smallest and largest values that appear in the data. 
+
+```{r}
+f0 <- function(x,a=0,b=1){
+  # Make sure a < b when using this function.
+  1/(b-a) + 0*x
+}
+
+a <- 99.5
+b <- 103.5
+
+x <- seq(a,b,0.01)
+y <- f0(x,a=a,b=b)
+
+par(mfrow=c(1,1),mar=c(2,2,3,0.25),oma=rep(0.5,4))
+hist(dist$percent_intensity,
+     probability = TRUE,
+     xlim=c(98,105),
+     ylim=c(0,0.8),
+     main="Histogram of Lightbulb Intensities \n with fitted f0 function")
+lines(x,y,col=2)
+```
+
+Brigham noted, as well as the rest of us (but Brigham laughed), that this model is garbage.  The fit is quite poor.  
+
+Now let's look at $f_1(L; h,a) = \frac{1}{\sqrt{2\pi a}}e^{-\frac{(x-h)^2}{2a}}$.  We'll use the parameters $a=0.314$ and $h=101.5$. 
+
+```{r}
+f1 <- function(x,a=0,h=1){
+  # Make sure a < b when using this function.
+  1/sqrt(2*pi*a)*exp(-(x-h)^2/(2*a))
+}
+
+my_a <- 0.31
+my_h <- 101.5
+
+x <- seq(99,104,0.01)
+y <- f1(x,a=my_a,h=my_h)
+
+par(mfrow=c(1,1),mar=c(2,2,3,0.25),oma=rep(0.5,4))
+hist(dist$percent_intensity,
+     probability = TRUE,
+     xlim=c(99,104),
+     ylim=c(0,0.8),
+     main="Histogram of Lightbulb Intensities \n with fitted f1 function",
+     breaks = 20)
+lines(x,y,col=2)
+```
+
+This fit seems decent.  
